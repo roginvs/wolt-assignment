@@ -32,7 +32,7 @@ describe("Opening hours transformer", () => {
         { dayLabel: "Thursday", isToday: dayId === 4, openHours: [] },
         { dayLabel: "Friday", isToday: dayId === 5, openHours: [] },
         { dayLabel: "Saturday", isToday: dayId === 6, openHours: [] },
-        { dayLabel: "Sunday", isToday: dayId === 7, openHours: [] },
+        { dayLabel: "Sunday", isToday: dayId === 0, openHours: [] },
       ]);
     });
   }
