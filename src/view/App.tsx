@@ -4,8 +4,23 @@ import { OpeningHoursUi } from "./OpeningHours";
 import { palette } from "./palette";
 import { SAMPLE_OPENING_HOURS } from "./sampleOpeningHours";
 
+function AddGoogleFont() {
+  React.useEffect(() => {
+    const url =
+      "https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap";
+    const linkElement = document.createElement("link");
+    linkElement.rel = "stylesheet";
+    linkElement.type = "text/css";
+    linkElement.href = url;
+    document.body.appendChild(linkElement);
+    return () => {
+      document.body.removeChild(linkElement);
+    };
+  });
+  return null;
+}
+
 const GlobalStyle = createGlobalStyle`
-@import "https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap";
 
 * {
     box-sizing: border-box;
@@ -40,6 +55,7 @@ export function App() {
   return (
     <>
       <GlobalStyle />
+      <AddGoogleFont />
       <Container>
         <OpeningHoursUi openingHours={SAMPLE_OPENING_HOURS} nowDayIndex={4} />
       </Container>
