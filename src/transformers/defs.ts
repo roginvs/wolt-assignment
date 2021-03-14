@@ -18,12 +18,13 @@ export type OpeningHoursDayItem = {
 
 export type OpeningHours = Record<DayOfWeek, OpeningHoursDayItem[]>;
 
+export type ViewOpeningHoursRange = {
+  start: string;
+  end: string;
+};
 export type ViewOpeningHoursDay = {
   dayLabel: string;
   isToday: boolean;
-  openHours: {
-    start: string;
-    end: string;
-  }[];
+  openHours: ViewOpeningHoursRange[];
 };
 export type ViewOpeningHours = ViewOpeningHoursDay[];

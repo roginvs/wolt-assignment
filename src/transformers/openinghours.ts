@@ -5,6 +5,7 @@ import {
   OpeningHours,
   OpeningHoursDayItem,
   ViewOpeningHours,
+  ViewOpeningHoursRange,
 } from "./defs";
 const DAY_LABELS: Record<DayOfWeek, string> = {
   monday: "Monday",
@@ -30,8 +31,8 @@ export function cutTailFromPrevDay(
   thisDay: DeepImmutable<OpeningHoursDayItem[]>,
   prevDay: DeepImmutable<OpeningHoursDayItem[]>
 ): DeepImmutable<OpeningHoursDayItem[]> {
-  const isHaveTailFromLastDay = thisDay[0]?.type === "close";
-  if (isHaveTailFromLastDay) {
+  const isHaveTailFromPrevDay = thisDay[0]?.type === "close";
+  if (isHaveTailFromPrevDay) {
     const isPrevDayHaveCloseTail =
       prevDay.length > 0 && prevDay[prevDay.length - 1]?.type === "open";
     if (!isPrevDayHaveCloseTail) {
@@ -104,6 +105,30 @@ export function transformOpeningHours(
       throw new InternalError();
     }
     const nextDay = src[nextDayName];
+
+    const thisDayCombined = appendTailFromNextDay(
+      cutTailFromPrevDay(thisDay, prevDay),
+      nextDay
+    );
+
+    if (thisDayCombined.length % 2 !== 0) {
+      throw new InputError(`Expecting even time ranges`);
+    }
+
+    const viewOpenHours: ViewOpeningHoursRange[] = [];
+    for (let i = 0; i < thisDayCombined.length - 1; i += 2) {
+      const opening = thisDayCombined[i];
+      const closing = thisDayCombined[i + 1];
+      if (!opening || !closing) {
+        throw new InternalError();
+      }
+      if (opening.type !== "open") {
+        throw new InputError("Expecting to open first");
+      }
+      if (closing.type !== "close") {
+        throw new InputError("Expecing to close after open");
+      }
+    }
 
     const isToday = now.getDay() === dayIndex;
     result.push({

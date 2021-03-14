@@ -173,26 +173,23 @@ describe("Opening hours transformer", () => {
     ).toThrow("Expecting time rangers to ascend");
   });
 
+  const emptyBase = {
+    monday: [],
+    tuesday: [],
+    wednesday: [],
+    thursday: [],
+    friday: [],
+    saturday: [],
+    sunday: [],
+  } as const;
+
   describe("Closed all days", () => {
     for (const dayId of [0, 1, 2, 3, 4, 5, 6]) {
       it(`Today is ${DAYS_OF_WEEK[dayId]}`, () => {
         const now = new Date(`2021-03-${14 + dayId}T16:04:37.974Z`);
         expect(now.getDay()).toBe(dayId);
 
-        expect(
-          transformOpeningHours(
-            {
-              monday: [],
-              tuesday: [],
-              wednesday: [],
-              thursday: [],
-              friday: [],
-              saturday: [],
-              sunday: [],
-            },
-            now
-          )
-        ).toEqual([
+        expect(transformOpeningHours(emptyBase, now)).toEqual([
           { dayLabel: "Monday", isToday: dayId === 1, openHours: [] },
           { dayLabel: "Tuesday", isToday: dayId === 2, openHours: [] },
           { dayLabel: "Wednesday", isToday: dayId === 3, openHours: [] },
@@ -203,5 +200,55 @@ describe("Opening hours transformer", () => {
         ]);
       });
     }
+  });
+
+  describe("Have wrong input", () => {
+    const now = new Date(`2021-03-14T16:04:37.974Z`);
+
+    it(`Throws if odd ranges`, () =>
+      expect(() =>
+        transformOpeningHours(
+          {
+            ...emptyBase,
+            monday: [
+              { type: "open", value: 11 },
+              { type: "close", value: 12 },
+              { type: "close", value: 13 },
+            ],
+          },
+          now
+        )
+      ).toThrow("Expecting even time ranges"));
+
+    it(`Throws if open/close is not interleaving`, () => {
+      expect(() =>
+        transformOpeningHours(
+          {
+            ...emptyBase,
+            monday: [
+              { type: "open", value: 11 },
+              { type: "close", value: 12 },
+              { type: "close", value: 13 },
+              { type: "close", value: 14 },
+            ],
+          },
+          now
+        )
+      ).toThrow("Expecting to open first");
+      expect(() =>
+        transformOpeningHours(
+          {
+            ...emptyBase,
+            monday: [
+              { type: "open", value: 11 },
+              { type: "open", value: 12 },
+              { type: "close", value: 13 },
+              { type: "close", value: 14 },
+            ],
+          },
+          now
+        )
+      ).toThrow("Expecing to close after open");
+    });
   });
 });
