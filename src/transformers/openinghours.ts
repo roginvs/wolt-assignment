@@ -115,8 +115,12 @@ export function transformOpeningHours(
       nextDay
     );
 
+    // We already checked that items are interleaved
+    // If source is not started with "open", then we already took "open" from previous day
+    // If source is not ending with "close", then we already took "close" from next day
+    // So, our list must be a even list of open-close pairs
     if (thisDayCombined.length % 2 !== 0) {
-      throw new InputError(`Expecting even time ranges`);
+      throw new InternalError();
     }
 
     const viewOpenHours: ViewOpeningHoursRange[] = [];
@@ -127,13 +131,10 @@ export function transformOpeningHours(
         throw new InternalError();
       }
 
-      // We already checked that items are interleaved
       if (opening.type !== "open") {
-        // If source is not started with "open", then we already took "open" from previous day
         throw new InternalError();
       }
       if (closing.type !== "close") {
-        // If source is not ending with "close", then we already took "close" from next day
         throw new InternalError();
       }
 
