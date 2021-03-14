@@ -327,5 +327,65 @@ describe("Opening hours transformer", () => {
         { dayLabel: "Sunday", isToday: false, openHours: [] },
       ]);
     });
+
+    it(`Full data formatting example`, () => {
+      const data = transformOpeningHours(
+        {
+          monday: [],
+          tuesday: [
+            { type: "open", value: 36000 },
+            { type: "close", value: 64800 },
+          ],
+          wednesday: [],
+          thursday: [
+            { type: "open", value: 36000 },
+            { type: "close", value: 64800 },
+          ],
+          friday: [{ type: "open", value: 36000 }],
+          saturday: [
+            { type: "close", value: 3600 },
+            { type: "open", value: 36000 },
+          ],
+          sunday: [
+            { type: "close", value: 3600 },
+            { type: "open", value: 43200 },
+            { type: "close", value: 75600 },
+          ],
+        },
+        { dayIndex: 5 }
+      );
+
+      const expected = [
+        { dayLabel: "Monday", isToday: false, openHours: [] },
+        {
+          dayLabel: "Tuesday",
+          isToday: false,
+          openHours: [{ opens: "10 AM", closes: "6 PM" }],
+        },
+        { dayLabel: "Wednesday", isToday: false, openHours: [] },
+        {
+          dayLabel: "Thursday",
+          isToday: false,
+          openHours: [{ opens: "10 AM", closes: "6 PM" }],
+        },
+        {
+          dayLabel: "Friday",
+          isToday: true,
+          openHours: [{ opens: "10 AM", closes: "1 AM" }],
+        },
+        {
+          dayLabel: "Saturday",
+          isToday: false,
+          openHours: [{ opens: "10 AM", closes: "1 AM" }],
+        },
+        {
+          dayLabel: "Sunday",
+          isToday: false,
+          openHours: [{ opens: "12 PM", closes: "9 PM" }],
+        },
+      ];
+
+      expect(data).toEqual(expected);
+    });
   });
 });
