@@ -13,7 +13,7 @@ export const Card = styled("div")({
 
 export const CardHeader = styled("h2")({
   marginTop: 0,
-  marginBottom: 0,
+  marginBottom: 4,
   fontWeight: "bold",
   fontSize: 24,
   lineHeight: "30px",
