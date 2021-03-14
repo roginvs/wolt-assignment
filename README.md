@@ -6,6 +6,7 @@ You have to have nodejs. I used version 12
 
 ```sh
 npm install
+npm test
 npm start
 ```
 
