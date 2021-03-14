@@ -20,5 +20,11 @@ export const SAMPLE_OPENING_HOURS: OpeningHours = {
     { type: "close", value: 3600 },
     { type: "open", value: 43200 },
     { type: "close", value: 75600 },
+
+    // I used this to check how it looks if there are 2 ranges in the same day
+    /*
+    { type: "open", value: 75600 + 60 * 60 },
+    { type: "close", value: 75600 + 60 * 60 * 2 },
+    */
   ],
 };
