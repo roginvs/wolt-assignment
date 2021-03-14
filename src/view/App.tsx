@@ -5,7 +5,7 @@ import { palette } from "./palette";
 import { SAMPLE_OPENING_HOURS } from "./sampleOpeningHours";
 
 const GlobalStyle = createGlobalStyle`
-@import "https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap";
 
 * {
     box-sizing: border-box;

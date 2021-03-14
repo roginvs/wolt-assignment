@@ -11,3 +11,12 @@ npm start
 ```
 
 Open `https://localhost:5002`
+
+
+## TODO
+
+- check visual difference
+  - font in the list is not bold enough
+  - letter-spacing is weird
+
+- maybe instead of isToday use `todayLabel: null | string` ?
