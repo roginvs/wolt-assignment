@@ -183,6 +183,7 @@ export function transformOpeningHours(
 
     const isToday = now.dayIndex === dayIndex;
     result.push({
+      id: dayName,
       dayLabel: DAY_LABELS[dayName],
       isToday: isToday,
       openHours: viewOpenHours,

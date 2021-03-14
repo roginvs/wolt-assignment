@@ -17,5 +17,6 @@ export const CardHeader = styled("h2")({
   fontWeight: "bold",
   fontSize: 24,
   lineHeight: "30px",
+  paddingBottom: 10,
   borderBottom: `1px solid ${palette.black}`,
 });

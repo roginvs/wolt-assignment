@@ -17,6 +17,13 @@ const ClockIcon = styled(FaRegClock)({
   marginRight: 15,
 });
 
+export const ListItem = styled("div")({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  borderBottom: `1px solid ${palette.grey2}`,
+});
+
 export function OpeningHoursUi(props: {
   openingHours: OpeningHours;
   nowDayIndex: number;
@@ -30,6 +37,9 @@ export function OpeningHoursUi(props: {
       <Header>
         <ClockIcon /> <span>Opening hours</span>
       </Header>
+      {data.map((day) => (
+        <ListItem key={day.id}>{day.dayLabel}</ListItem>
+      ))}
     </Card>
   );
 }
