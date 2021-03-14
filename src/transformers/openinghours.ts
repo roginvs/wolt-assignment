@@ -130,7 +130,7 @@ export function transformOpeningHours(
   for (const [dayName, dayIndex] of DAYS_OF_WEEK.map(
     (dayOfWeek, index) => [dayOfWeek, index] as const
   )) {
-    const thisDay = src[dayName];
+    const thisDay = src[dayName] || [];
     checkTimeIsAscAndInterleaving(thisDay);
 
     const prevDayIndex = (dayIndex + 6) % 7;
@@ -138,14 +138,14 @@ export function transformOpeningHours(
     if (!prevDayName) {
       throw new InternalError();
     }
-    const prevDay = src[prevDayName];
+    const prevDay = src[prevDayName] || [];
 
     const nextDayIndex = (dayIndex + 1) % 7;
     const nextDayName = DAYS_OF_WEEK[nextDayIndex];
     if (!nextDayName) {
       throw new InternalError();
     }
-    const nextDay = src[nextDayName];
+    const nextDay = src[nextDayName] || [];
 
     const thisDayCombined = appendTailFromNextDay(
       cutTailFromPrevDay(thisDay, prevDay),

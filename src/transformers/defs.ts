@@ -16,7 +16,7 @@ export type OpeningHoursDayItem = {
   value: number;
 };
 
-export type OpeningHours = Record<DayOfWeek, OpeningHoursDayItem[]>;
+export type OpeningHours = Partial<Record<DayOfWeek, OpeningHoursDayItem[]>>;
 
 export type ViewOpeningHoursRange = {
   start: string;

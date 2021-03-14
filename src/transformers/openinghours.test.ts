@@ -196,10 +196,26 @@ describe("Opening hours transformer", () => {
     sunday: [],
   } as const;
 
-  describe("Closed all days", () => {
+  describe("Closed all days, all days are present", () => {
     for (const dayId of [0, 1, 2, 3, 4, 5, 6]) {
       it(`Today is ${DAYS_OF_WEEK[dayId]}`, () => {
         expect(transformOpeningHours(emptyBase, { dayIndex: dayId })).toEqual([
+          { dayLabel: "Monday", isToday: dayId === 1, openHours: [] },
+          { dayLabel: "Tuesday", isToday: dayId === 2, openHours: [] },
+          { dayLabel: "Wednesday", isToday: dayId === 3, openHours: [] },
+          { dayLabel: "Thursday", isToday: dayId === 4, openHours: [] },
+          { dayLabel: "Friday", isToday: dayId === 5, openHours: [] },
+          { dayLabel: "Saturday", isToday: dayId === 6, openHours: [] },
+          { dayLabel: "Sunday", isToday: dayId === 0, openHours: [] },
+        ]);
+      });
+    }
+  });
+
+  describe("Closed all days, no days are present", () => {
+    for (const dayId of [0, 1, 2, 3, 4, 5, 6]) {
+      it(`Today is ${DAYS_OF_WEEK[dayId]}`, () => {
+        expect(transformOpeningHours({}, { dayIndex: dayId })).toEqual([
           { dayLabel: "Monday", isToday: dayId === 1, openHours: [] },
           { dayLabel: "Tuesday", isToday: dayId === 2, openHours: [] },
           { dayLabel: "Wednesday", isToday: dayId === 3, openHours: [] },
