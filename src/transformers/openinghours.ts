@@ -84,6 +84,41 @@ export function checkTimeIsAscAndInterleaving(
   }
 }
 
+export function transformSecondsFromMidnight(value: number) {
+  function pad2(valueToPad: number) {
+    return valueToPad < 10 ? `0${valueToPad}` : `${valueToPad}`;
+  }
+
+  if (value < 0) {
+    throw new InputError("Value must be greater than zero");
+  }
+  const MAX_SECONDS_IN_A_DAY = 60 * 60 * 24;
+  if (value >= MAX_SECONDS_IN_A_DAY) {
+    throw new InputError(`Value must be lower ${MAX_SECONDS_IN_A_DAY}`);
+  }
+  if (value === MAX_SECONDS_IN_A_DAY - 1) {
+    // To show 12:00 AM instead of 11:59:59 PM
+    value += 1;
+  }
+
+  const isAm = value < 12 * 60 * 60;
+  const ampmText = isAm ? "AM" : "PM";
+
+  // https://en.wikipedia.org/wiki/12-hour_clock
+
+  const hours = ((Math.floor(value / (60 * 60)) + 11) % 12) + 1;
+  const minutes = Math.floor((value % (60 * 60)) / 60);
+  const seconds = value % 60;
+
+  if (seconds === 0 && minutes === 0) {
+    return `${hours} ${ampmText}`;
+  }
+  if (seconds === 0) {
+    return `${hours}.${pad2(minutes)} ${ampmText}`;
+  }
+  return `${hours}.${pad2(minutes)}:${pad2(seconds)} ${ampmText}`;
+}
+
 export function transformOpeningHours(
   src: DeepImmutable<OpeningHours>,
   now: {

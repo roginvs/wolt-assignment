@@ -4,6 +4,7 @@ import {
   checkTimeIsAscAndInterleaving,
   cutTailFromPrevDay,
   transformOpeningHours,
+  transformSecondsFromMidnight,
 } from "./openinghours";
 
 describe("Opening hours transformer", () => {
@@ -208,6 +209,37 @@ describe("Opening hours transformer", () => {
           { dayLabel: "Sunday", isToday: dayId === 0, openHours: [] },
         ]);
       });
+    }
+  });
+
+  describe("Helper transformSecondsFromMidnight", () => {
+    it(`Throws on wrong values`, () => {
+      expect(() => transformSecondsFromMidnight(-1)).toThrow(
+        "Value must be greater than zero"
+      );
+      expect(() => transformSecondsFromMidnight(60 * 60 * 24)).toThrow(
+        "Value must be lower 86400"
+      );
+    });
+
+    const testCases = [
+      [32400, "9 AM"],
+      [0, "12 AM"],
+      [37800, "10.30 AM"],
+      [12 * 60 * 60, "12 PM"],
+      [12 * 60 * 60 + 43 * 60, "12.43 PM"],
+      [12 * 60 * 60 + 1 * 60, "12.01 PM"],
+      [60 * 60 * 24 - 2, "11.59:58 PM"],
+      [60 * 60 * 24 - 1, "12 PM"],
+      [0 * 60 * 60 + 3 * 60 + 4, "12.03:04 AM"],
+      [0 * 60 * 60 + 53 * 60 + 24, "12.53:24 AM"],
+      [1 * 60 * 60 + 3 * 60 + 4, "1.03:04 AM"],
+      [3 * 60 * 60 + 53 * 60 + 24, "3.53:24 AM"],
+      [23 * 60 * 60 + 53 * 60 + 24, "11.53:24 PM"],
+    ] as const;
+    for (const [value, expected] of testCases) {
+      it(`${value} -> ${expected}`, () =>
+        expect(transformSecondsFromMidnight(value)).toBe(expected));
     }
   });
 });
