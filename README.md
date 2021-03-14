@@ -20,3 +20,5 @@ Open `https://localhost:5002`
   - letter-spacing is weird
 
 - maybe instead of isToday use `todayLabel: null | string` ?
+
+- what is "Card" responsibility, and what is List? Maybe to extract some parts from App.tsx
