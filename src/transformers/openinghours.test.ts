@@ -2,7 +2,10 @@ import { DAYS_OF_WEEK } from "./defs";
 import { transformOpeningHours } from "./openinghours";
 
 describe("Opening hours transformer", () => {
-  it(`Timezone is ok`, () => expect(new Date().getTimezoneOffset()).toBe(-120));
+  it(`Timezone is ok`, () =>
+    expect(new Date(`2021-03-14T16:04:37.974Z`).getTimezoneOffset()).toBe(
+      -120
+    ));
 
   for (const dayId of [0, 1, 2, 3, 4, 5, 6]) {
     it(`Closed all days, today is ${DAYS_OF_WEEK[dayId]}`, () => {
