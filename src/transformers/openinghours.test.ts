@@ -1,5 +1,9 @@
 import { DAYS_OF_WEEK } from "./defs";
-import { cutTailFromPrevDay, transformOpeningHours } from "./openinghours";
+import {
+  appendTailFromNextDay,
+  cutTailFromPrevDay,
+  transformOpeningHours,
+} from "./openinghours";
 
 describe("Opening hours transformer", () => {
   it(`Timezone is ok`, () =>
@@ -83,6 +87,70 @@ describe("Opening hours transformer", () => {
         {
           type: "close",
           value: 300,
+        },
+      ]));
+  });
+
+  describe("Helper function appendTailFromNextDay", () => {
+    it(`Empty items`, () => expect(appendTailFromNextDay([], [])).toEqual([]));
+    it(`No tail to the next day`, () =>
+      expect(
+        appendTailFromNextDay(
+          [
+            {
+              type: "open",
+              value: 100,
+            },
+            {
+              type: "close",
+              value: 200,
+            },
+          ],
+          []
+        )
+      ).toEqual([
+        {
+          type: "open",
+          value: 100,
+        },
+        {
+          type: "close",
+          value: 200,
+        },
+      ]));
+
+    it(`Throws if no tail on the next day`, () =>
+      expect(() =>
+        appendTailFromNextDay(
+          [
+            {
+              type: "open",
+              value: 1000,
+            },
+          ],
+          []
+        )
+      ).toThrow('Next day must contain "close" as first item'));
+
+    it(`Have tail from previous day`, () =>
+      expect(
+        appendTailFromNextDay(
+          [
+            {
+              type: "open",
+              value: 1000,
+            },
+          ],
+          [{ type: "close", value: 10 }]
+        )
+      ).toEqual([
+        {
+          type: "open",
+          value: 1000,
+        },
+        {
+          type: "close",
+          value: 10,
         },
       ]));
   });
