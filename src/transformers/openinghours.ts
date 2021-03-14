@@ -1,4 +1,9 @@
-import { DayOfWeek, DAY_OF_WEEK, OpeningHours, ViewOpeningHours } from "./defs";
+import {
+  DayOfWeek,
+  DAYS_OF_WEEK,
+  OpeningHours,
+  ViewOpeningHours,
+} from "./defs";
 const DAY_LABELS: Record<DayOfWeek, string> = {
   monday: "Monday",
   tuesday: "Tuesday",
@@ -15,13 +20,24 @@ export function transformOpeningHours(
 ): ViewOpeningHours {
   const result: ViewOpeningHours = [];
 
-  for (const day of DAY_OF_WEEK) {
+  for (const [dayName, dayIndex] of DAYS_OF_WEEK.map(
+    (dayOfWeek, index) => [dayOfWeek, index] as const
+  )) {
+    const isToday = now.getDay() === dayIndex;
+
     result.push({
-      dayLabel: DAY_LABELS[day],
-      isToday: false,
+      dayLabel: DAY_LABELS[dayName],
+      isToday: isToday,
       openHours: [],
     });
   }
+
+  // Push Sunday to the end
+  const sunday = result.shift();
+  if (!sunday) {
+    throw new Error("Internal error");
+  }
+  result.push(sunday);
 
   return result;
 }

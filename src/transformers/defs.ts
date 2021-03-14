@@ -1,14 +1,15 @@
-export const DAY_OF_WEEK = [
+/** Using JS order of Date.getDay */
+export const DAYS_OF_WEEK = [
+  "sunday",
   "monday",
   "tuesday",
   "wednesday",
   "thursday",
   "friday",
   "saturday",
-  "sunday",
 ] as const;
 
-export type DayOfWeek = typeof DAY_OF_WEEK[number];
+export type DayOfWeek = typeof DAYS_OF_WEEK[number];
 
 export type OpeningHoursDayItem = {
   type: "open" | "close";
