@@ -176,8 +176,8 @@ export function transformOpeningHours(
       }
 
       viewOpenHours.push({
-        start: transformSecondsFromMidnight(opening.value),
-        end: transformSecondsFromMidnight(opening.value),
+        opens: transformSecondsFromMidnight(opening.value),
+        closes: transformSecondsFromMidnight(closing.value),
       });
     }
 

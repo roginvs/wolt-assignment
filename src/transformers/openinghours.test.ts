@@ -258,4 +258,74 @@ describe("Opening hours transformer", () => {
         expect(transformSecondsFromMidnight(value)).toBe(expected));
     }
   });
+
+  describe("Real examples", () => {
+    it("Friday and Saturday", () => {
+      expect(
+        transformOpeningHours(
+          {
+            friday: [
+              {
+                type: "open",
+                value: 64800,
+              },
+            ],
+            saturday: [
+              {
+                type: "close",
+                value: 3600,
+              },
+              {
+                type: "open",
+                value: 32400,
+              },
+              {
+                type: "close",
+                value: 39600,
+              },
+              {
+                type: "open",
+                value: 57600,
+              },
+              {
+                type: "close",
+                value: 82800,
+              },
+            ],
+          },
+          { dayIndex: 1 }
+        )
+      ).toEqual([
+        { dayLabel: "Monday", isToday: true, openHours: [] },
+        { dayLabel: "Tuesday", isToday: false, openHours: [] },
+        { dayLabel: "Wednesday", isToday: false, openHours: [] },
+        { dayLabel: "Thursday", isToday: false, openHours: [] },
+        {
+          dayLabel: "Friday",
+          isToday: false,
+          openHours: [
+            {
+              opens: "6 PM",
+              closes: "1 AM",
+            },
+          ],
+        },
+        {
+          dayLabel: "Saturday",
+          isToday: false,
+          openHours: [
+            {
+              opens: "9 AM",
+              closes: "11 AM",
+            },
+            {
+              opens: "4 PM",
+              closes: "11 PM",
+            },
+          ],
+        },
+        { dayLabel: "Sunday", isToday: false, openHours: [] },
+      ]);
+    });
+  });
 });
