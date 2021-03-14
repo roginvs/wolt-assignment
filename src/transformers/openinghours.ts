@@ -175,14 +175,17 @@ export function transformOpeningHours(
         throw new InternalError();
       }
 
-      //
+      viewOpenHours.push({
+        start: transformSecondsFromMidnight(opening.value),
+        end: transformSecondsFromMidnight(opening.value),
+      });
     }
 
     const isToday = now.dayIndex === dayIndex;
     result.push({
       dayLabel: DAY_LABELS[dayName],
       isToday: isToday,
-      openHours: [],
+      openHours: viewOpenHours,
     });
   }
 
