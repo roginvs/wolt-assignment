@@ -38,7 +38,7 @@ export function App() {
     <>
       <GlobalStyle />
       <Container>
-        <OpeningHoursUi openingHours={SAMPLE_OPENING_HOURS} todayDayId={4} />
+        <OpeningHoursUi openingHours={SAMPLE_OPENING_HOURS} nowDayIndex={4} />
       </Container>
     </>
   );
