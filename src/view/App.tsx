@@ -1,5 +1,7 @@
 import * as React from "react";
 import styled, { createGlobalStyle } from "styled-components";
+import { OpeningHoursUi } from "./OpeningHours";
+import { SAMPLE_OPENING_HOURS } from "./sampleOpeningHours";
 
 const GlobalStyle = createGlobalStyle`
 @import "https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap";
@@ -36,7 +38,7 @@ export function App() {
     <>
       <GlobalStyle />
       <Container>
-        <div>asdasd</div>
+        <OpeningHoursUi openingHours={SAMPLE_OPENING_HOURS} todayDayId={4} />
       </Container>
     </>
   );
