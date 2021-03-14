@@ -1,7 +1,7 @@
 import { DAYS_OF_WEEK } from "./defs";
 import {
   appendTailFromNextDay,
-  checkTimeIsAsc,
+  checkTimeIsAscAndInterleaving,
   cutTailFromPrevDay,
   transformOpeningHours,
 } from "./openinghours";
@@ -156,21 +156,38 @@ describe("Opening hours transformer", () => {
       ]));
   });
 
-  describe("Helper checkTimeIsAsc", () => {
-    expect(() => checkTimeIsAsc([])).not.toThrow();
-    expect(() => checkTimeIsAsc([{ type: "open", value: 1 }])).not.toThrow();
-    expect(() =>
-      checkTimeIsAsc([
-        { type: "open", value: 1 },
-        { type: "open", value: 2 },
-      ])
-    ).not.toThrow();
-    expect(() =>
-      checkTimeIsAsc([
-        { type: "open", value: 1 },
-        { type: "open", value: 1 },
-      ])
-    ).toThrow("Expecting time rangers to ascend");
+  describe("Helper checkTimeIsAscAndInterleaving", () => {
+    it("Empty data", () =>
+      expect(() => checkTimeIsAscAndInterleaving([])).not.toThrow());
+
+    it("One item", () =>
+      expect(() =>
+        checkTimeIsAscAndInterleaving([{ type: "open", value: 1 }])
+      ).not.toThrow());
+
+    it("Ascending", () =>
+      expect(() =>
+        checkTimeIsAscAndInterleaving([
+          { type: "open", value: 1 },
+          { type: "close", value: 2 },
+        ])
+      ).not.toThrow());
+
+    it("Ascending but not interleaving", () =>
+      expect(() =>
+        checkTimeIsAscAndInterleaving([
+          { type: "open", value: 1 },
+          { type: "open", value: 2 },
+        ])
+      ).toThrow("Items are not interleaving"));
+
+    it("Not ascending", () =>
+      expect(() =>
+        checkTimeIsAscAndInterleaving([
+          { type: "open", value: 1 },
+          { type: "open", value: 1 },
+        ])
+      ).toThrow("Expecting time rangers to ascend"));
   });
 
   const emptyBase = {
@@ -200,55 +217,5 @@ describe("Opening hours transformer", () => {
         ]);
       });
     }
-  });
-
-  describe("Have wrong input", () => {
-    const now = new Date(`2021-03-14T16:04:37.974Z`);
-
-    it(`Throws if odd ranges`, () =>
-      expect(() =>
-        transformOpeningHours(
-          {
-            ...emptyBase,
-            monday: [
-              { type: "open", value: 11 },
-              { type: "close", value: 12 },
-              { type: "close", value: 13 },
-            ],
-          },
-          now
-        )
-      ).toThrow("Expecting even time ranges"));
-
-    it(`Throws if open/close is not interleaving`, () => {
-      expect(() =>
-        transformOpeningHours(
-          {
-            ...emptyBase,
-            monday: [
-              { type: "open", value: 11 },
-              { type: "close", value: 12 },
-              { type: "close", value: 13 },
-              { type: "close", value: 14 },
-            ],
-          },
-          now
-        )
-      ).toThrow("Expecting to open first");
-      expect(() =>
-        transformOpeningHours(
-          {
-            ...emptyBase,
-            monday: [
-              { type: "open", value: 11 },
-              { type: "open", value: 12 },
-              { type: "close", value: 13 },
-              { type: "close", value: 14 },
-            ],
-          },
-          now
-        )
-      ).toThrow("Expecing to close after open");
-    });
   });
 });

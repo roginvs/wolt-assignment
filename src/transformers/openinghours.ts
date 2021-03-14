@@ -65,7 +65,7 @@ export function appendTailFromNextDay(
   }
 }
 
-export function checkTimeIsAsc(
+export function checkTimeIsAscAndInterleaving(
   thisDay: DeepImmutable<OpeningHoursDayItem[]>
 ): void {
   for (let i = 0; i < thisDay.length - 1; i++) {
@@ -76,6 +76,10 @@ export function checkTimeIsAsc(
     }
     if (thisItem.value >= nextItem.value) {
       throw new InputError("Expecting time rangers to ascend");
+    }
+
+    if (thisItem.type === nextItem.type) {
+      throw new InputError("Items are not interleaving");
     }
   }
 }
@@ -90,7 +94,7 @@ export function transformOpeningHours(
     (dayOfWeek, index) => [dayOfWeek, index] as const
   )) {
     const thisDay = src[dayName];
-    checkTimeIsAsc(thisDay);
+    checkTimeIsAscAndInterleaving(thisDay);
 
     const prevDayIndex = (dayIndex + 6) % 7;
     const prevDayName = DAYS_OF_WEEK[prevDayIndex];
@@ -122,12 +126,18 @@ export function transformOpeningHours(
       if (!opening || !closing) {
         throw new InternalError();
       }
+
+      // We already checked that items are interleaved
       if (opening.type !== "open") {
-        throw new InputError("Expecting to open first");
+        // If source is not started with "open", then we already took "open" from previous day
+        throw new InternalError();
       }
       if (closing.type !== "close") {
-        throw new InputError("Expecing to close after open");
+        // If source is not ending with "close", then we already took "close" from next day
+        throw new InternalError();
       }
+
+      //
     }
 
     const isToday = now.getDay() === dayIndex;
