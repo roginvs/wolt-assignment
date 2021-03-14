@@ -7,11 +7,6 @@ import {
 } from "./openinghours";
 
 describe("Opening hours transformer", () => {
-  it(`Timezone is ok`, () =>
-    expect(new Date(`2021-03-14T16:04:37.974Z`).getTimezoneOffset()).toBe(
-      -120
-    ));
-
   describe("Helper function cutTailFromPrevDay", () => {
     it(`Empty items`, () => expect(cutTailFromPrevDay([], [])).toEqual([]));
     it(`No tail from previous day`, () =>
@@ -203,10 +198,7 @@ describe("Opening hours transformer", () => {
   describe("Closed all days", () => {
     for (const dayId of [0, 1, 2, 3, 4, 5, 6]) {
       it(`Today is ${DAYS_OF_WEEK[dayId]}`, () => {
-        const now = new Date(`2021-03-${14 + dayId}T16:04:37.974Z`);
-        expect(now.getDay()).toBe(dayId);
-
-        expect(transformOpeningHours(emptyBase, now)).toEqual([
+        expect(transformOpeningHours(emptyBase, { dayIndex: dayId })).toEqual([
           { dayLabel: "Monday", isToday: dayId === 1, openHours: [] },
           { dayLabel: "Tuesday", isToday: dayId === 2, openHours: [] },
           { dayLabel: "Wednesday", isToday: dayId === 3, openHours: [] },

@@ -86,7 +86,9 @@ export function checkTimeIsAscAndInterleaving(
 
 export function transformOpeningHours(
   src: DeepImmutable<OpeningHours>,
-  now: Date = new Date()
+  now: {
+    dayIndex: number;
+  }
 ): DeepImmutable<ViewOpeningHours> {
   const result: ViewOpeningHours = [];
 
@@ -141,7 +143,7 @@ export function transformOpeningHours(
       //
     }
 
-    const isToday = now.getDay() === dayIndex;
+    const isToday = now.dayIndex === dayIndex;
     result.push({
       dayLabel: DAY_LABELS[dayName],
       isToday: isToday,
