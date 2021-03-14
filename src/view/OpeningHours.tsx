@@ -2,6 +2,20 @@ import * as React from "react";
 import { OpeningHours } from "../transformers/defs";
 import { transformOpeningHours } from "../transformers/openinghours";
 import { FaRegClock } from "react-icons/fa";
+import styled from "styled-components";
+import { palette } from "./palette";
+import { Card, CardHeader } from "./Card";
+
+const Header = styled(CardHeader)({
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+});
+
+const ClockIcon = styled(FaRegClock)({
+  color: palette.grey3,
+  marginRight: 15,
+});
 
 export function OpeningHoursUi(props: {
   openingHours: OpeningHours;
@@ -12,9 +26,10 @@ export function OpeningHoursUi(props: {
   });
 
   return (
-    <div>
-      todo
-      <FaRegClock /> 2
-    </div>
+    <Card>
+      <Header>
+        <ClockIcon /> <span>Opening hours</span>
+      </Header>
+    </Card>
   );
 }
