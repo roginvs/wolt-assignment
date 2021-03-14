@@ -200,13 +200,48 @@ describe("Opening hours transformer", () => {
     for (const dayId of [0, 1, 2, 3, 4, 5, 6]) {
       it(`Today is ${DAYS_OF_WEEK[dayId]}`, () => {
         expect(transformOpeningHours(emptyBase, { dayIndex: dayId })).toEqual([
-          { dayLabel: "Monday", isToday: dayId === 1, openHours: [] },
-          { dayLabel: "Tuesday", isToday: dayId === 2, openHours: [] },
-          { dayLabel: "Wednesday", isToday: dayId === 3, openHours: [] },
-          { dayLabel: "Thursday", isToday: dayId === 4, openHours: [] },
-          { dayLabel: "Friday", isToday: dayId === 5, openHours: [] },
-          { dayLabel: "Saturday", isToday: dayId === 6, openHours: [] },
-          { dayLabel: "Sunday", isToday: dayId === 0, openHours: [] },
+          {
+            dayLabel: "Monday",
+            id: "monday",
+            isToday: dayId === 1,
+            openHours: [],
+          },
+          {
+            dayLabel: "Tuesday",
+            id: "tuesday",
+            isToday: dayId === 2,
+            openHours: [],
+          },
+          {
+            dayLabel: "Wednesday",
+            id: "wednesday",
+            isToday: dayId === 3,
+            openHours: [],
+          },
+          {
+            dayLabel: "Thursday",
+            id: "thursday",
+            isToday: dayId === 4,
+            openHours: [],
+          },
+          {
+            dayLabel: "Friday",
+            id: "friday",
+            isToday: dayId === 5,
+            openHours: [],
+          },
+          {
+            dayLabel: "Saturday",
+            id: "saturday",
+            isToday: dayId === 6,
+            openHours: [],
+          },
+          {
+            dayLabel: "Sunday",
+            id: "sunday",
+            isToday: dayId === 0,
+            openHours: [],
+          },
         ]);
       });
     }
@@ -216,13 +251,48 @@ describe("Opening hours transformer", () => {
     for (const dayId of [0, 1, 2, 3, 4, 5, 6]) {
       it(`Today is ${DAYS_OF_WEEK[dayId]}`, () => {
         expect(transformOpeningHours({}, { dayIndex: dayId })).toEqual([
-          { dayLabel: "Monday", isToday: dayId === 1, openHours: [] },
-          { dayLabel: "Tuesday", isToday: dayId === 2, openHours: [] },
-          { dayLabel: "Wednesday", isToday: dayId === 3, openHours: [] },
-          { dayLabel: "Thursday", isToday: dayId === 4, openHours: [] },
-          { dayLabel: "Friday", isToday: dayId === 5, openHours: [] },
-          { dayLabel: "Saturday", isToday: dayId === 6, openHours: [] },
-          { dayLabel: "Sunday", isToday: dayId === 0, openHours: [] },
+          {
+            dayLabel: "Monday",
+            id: "monday",
+            isToday: dayId === 1,
+            openHours: [],
+          },
+          {
+            dayLabel: "Tuesday",
+            id: "tuesday",
+            isToday: dayId === 2,
+            openHours: [],
+          },
+          {
+            dayLabel: "Wednesday",
+            id: "wednesday",
+            isToday: dayId === 3,
+            openHours: [],
+          },
+          {
+            dayLabel: "Thursday",
+            id: "thursday",
+            isToday: dayId === 4,
+            openHours: [],
+          },
+          {
+            dayLabel: "Friday",
+            id: "friday",
+            isToday: dayId === 5,
+            openHours: [],
+          },
+          {
+            dayLabel: "Saturday",
+            id: "saturday",
+            isToday: dayId === 6,
+            openHours: [],
+          },
+          {
+            dayLabel: "Sunday",
+            id: "sunday",
+            isToday: dayId === 0,
+            openHours: [],
+          },
         ]);
       });
     }
@@ -296,12 +366,18 @@ describe("Opening hours transformer", () => {
           { dayIndex: 1 }
         )
       ).toEqual([
-        { dayLabel: "Monday", isToday: true, openHours: [] },
-        { dayLabel: "Tuesday", isToday: false, openHours: [] },
-        { dayLabel: "Wednesday", isToday: false, openHours: [] },
-        { dayLabel: "Thursday", isToday: false, openHours: [] },
+        { dayLabel: "Monday", id: "monday", isToday: true, openHours: [] },
+        { dayLabel: "Tuesday", id: "tuesday", isToday: false, openHours: [] },
+        {
+          dayLabel: "Wednesday",
+          id: "wednesday",
+          isToday: false,
+          openHours: [],
+        },
+        { dayLabel: "Thursday", id: "thursday", isToday: false, openHours: [] },
         {
           dayLabel: "Friday",
+          id: "friday",
           isToday: false,
           openHours: [
             {
@@ -312,6 +388,7 @@ describe("Opening hours transformer", () => {
         },
         {
           dayLabel: "Saturday",
+          id: "saturday",
           isToday: false,
           openHours: [
             {
@@ -324,7 +401,7 @@ describe("Opening hours transformer", () => {
             },
           ],
         },
-        { dayLabel: "Sunday", isToday: false, openHours: [] },
+        { dayLabel: "Sunday", id: "sunday", isToday: false, openHours: [] },
       ]);
     });
 
@@ -356,30 +433,40 @@ describe("Opening hours transformer", () => {
       );
 
       const expected = [
-        { dayLabel: "Monday", isToday: false, openHours: [] },
+        { dayLabel: "Monday", id: "monday", isToday: false, openHours: [] },
         {
           dayLabel: "Tuesday",
+          id: "tuesday",
           isToday: false,
           openHours: [{ opens: "10 AM", closes: "6 PM" }],
         },
-        { dayLabel: "Wednesday", isToday: false, openHours: [] },
+        {
+          dayLabel: "Wednesday",
+          id: "wednesday",
+          isToday: false,
+          openHours: [],
+        },
         {
           dayLabel: "Thursday",
+          id: "thursday",
           isToday: false,
           openHours: [{ opens: "10 AM", closes: "6 PM" }],
         },
         {
           dayLabel: "Friday",
+          id: "friday",
           isToday: true,
           openHours: [{ opens: "10 AM", closes: "1 AM" }],
         },
         {
           dayLabel: "Saturday",
+          id: "saturday",
           isToday: false,
           openHours: [{ opens: "10 AM", closes: "1 AM" }],
         },
         {
           dayLabel: "Sunday",
+          id: "sunday",
           isToday: false,
           openHours: [{ opens: "12 PM", closes: "9 PM" }],
         },
