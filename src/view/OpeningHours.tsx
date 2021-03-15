@@ -1,5 +1,5 @@
 import * as React from "react";
-import { OpeningHours } from "../transformers/defs";
+import { DayOfWeek, OpeningHours } from "../transformers/defs";
 import { transformOpeningHours } from "../transformers/openinghours";
 import { FaRegClock } from "react-icons/fa";
 import styled from "styled-components";
@@ -53,6 +53,16 @@ const HoursRanges = styled("span")({
   paddingLeft: 30,
 });
 
+const DAY_LABELS: Record<DayOfWeek, string> = {
+  monday: "Monday",
+  tuesday: "Tuesday",
+  wednesday: "Wednesday",
+  thursday: "Thursday",
+  friday: "Friday",
+  saturday: "Saturday",
+  sunday: "Sunday",
+};
+
 export function OpeningHoursUi(props: {
   openingHours: OpeningHours;
   nowDayIndex: number;
@@ -67,8 +77,8 @@ export function OpeningHoursUi(props: {
         <ClockIcon /> <span>Opening hours</span>
       </Header>
       {data.map((day) => (
-        <ListItem key={day.id}>
-          <DayLabel>{day.dayLabel}</DayLabel>
+        <ListItem key={day.dayName}>
+          <DayLabel>{DAY_LABELS[day.dayName]}</DayLabel>
           {day.isToday && <Today>today</Today>}
 
           {day.openHours.length === 0 ? (

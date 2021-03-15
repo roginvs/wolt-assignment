@@ -7,15 +7,6 @@ import {
   ViewOpeningHours,
   ViewOpeningHoursRange,
 } from "./defs";
-const DAY_LABELS: Record<DayOfWeek, string> = {
-  monday: "Monday",
-  tuesday: "Tuesday",
-  wednesday: "Wednesday",
-  thursday: "Thursday",
-  friday: "Friday",
-  saturday: "Saturday",
-  sunday: "Sunday",
-};
 
 export class InputError extends Error {
   // Nothing here
@@ -183,8 +174,7 @@ export function transformOpeningHours(
 
     const isToday = now.dayIndex === dayIndex;
     result.push({
-      id: dayName,
-      dayLabel: DAY_LABELS[dayName],
+      dayName: dayName,
       isToday: isToday,
       openHours: viewOpenHours,
     });

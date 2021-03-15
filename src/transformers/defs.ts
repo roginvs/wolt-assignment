@@ -23,8 +23,7 @@ export type ViewOpeningHoursRange = {
   closes: string;
 };
 export type ViewOpeningHoursDay = {
-  id: string;
-  dayLabel: string;
+  dayName: DayOfWeek;
   isToday: boolean;
   openHours: ViewOpeningHoursRange[];
 };
