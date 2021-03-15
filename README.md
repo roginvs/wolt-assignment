@@ -1,5 +1,9 @@
 # Wolt assignment
 
+## What it is?
+
+It is a Wolt test [assignment](https://c.smartrecruiters.com/sr-company-attachments-prod-dc5/5f05b5736bbcbc0ff2f7e7f3/d299cdb5-c0de-4c9d-8573-94a5ffdee6cb?r=s3-eu-central-1)
+
 ## How to run locally
 
 You have to have nodejs. I used version 12
@@ -13,12 +17,3 @@ npm start
 Open `https://localhost:5002`
 
 
-## TODO
-
-- check visual difference
-  - font in the list is not bold enough
-  - letter-spacing is weird
-
-- maybe instead of isToday use `todayLabel: null | string` ?
-
-- what is "Card" responsibility, and what is List? Maybe to extract some parts from App.tsx
