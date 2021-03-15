@@ -17,3 +17,12 @@ npm start
 Open `https://localhost:5002`
 
 
+Or, if you prefer to use docker for additional security:
+
+```sh
+docker run --rm -ti -p 5002:5002 -v $(pwd):/app node:12 bash
+cd /app
+npm install
+npm test
+npm start
+```
