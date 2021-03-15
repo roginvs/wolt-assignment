@@ -97,6 +97,7 @@ export function transformSecondsFromMidnight(value: number) {
 
   // https://en.wikipedia.org/wiki/12-hour_clock
 
+  // Adding 11 and then 1 to change 0 into 12
   const hours = ((Math.floor(value / (60 * 60)) + 11) % 12) + 1;
   const minutes = Math.floor((value % (60 * 60)) / 60);
   const seconds = value % 60;
