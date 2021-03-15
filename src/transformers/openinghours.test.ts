@@ -8,6 +8,11 @@ import {
 } from "./openinghours";
 
 describe("Opening hours transformer", () => {
+  describe(`DAYS_OF_WEEK const health-check`, () => {
+    it(`List is started from Sunday because JS getDay does so`, () =>
+      expect(DAYS_OF_WEEK[0]).toBe("sunday"));
+    it(`There are 7 days`, () => expect(DAYS_OF_WEEK.length).toBe(7));
+  });
   describe("Helper function cutTailFromPrevDay", () => {
     it(`Empty items`, () => expect(cutTailFromPrevDay([], [])).toEqual([]));
     it(`No tail from previous day`, () =>
