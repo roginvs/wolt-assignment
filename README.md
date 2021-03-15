@@ -14,7 +14,7 @@ npm test
 npm start
 ```
 
-Open `https://localhost:5002`
+Open `http://localhost:5002`
 
 
 Or, if you prefer to use docker for additional security:
