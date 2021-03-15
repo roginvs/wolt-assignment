@@ -113,7 +113,7 @@ export function transformSecondsFromMidnight(value: number) {
 export function transformOpeningHours(
   src: DeepImmutable<OpeningHours>,
   now: {
-    dayIndex: number;
+    dayName: DayOfWeek;
   }
 ): DeepImmutable<ViewOpeningHours> {
   const result: ViewOpeningHours = [];
@@ -172,7 +172,7 @@ export function transformOpeningHours(
       });
     }
 
-    const isToday = now.dayIndex === dayIndex;
+    const isToday = now.dayName === dayName;
     result.push({
       dayName: dayName,
       isToday: isToday,

@@ -199,7 +199,12 @@ describe("Opening hours transformer", () => {
   describe("Closed all days, all days are present", () => {
     for (const dayId of [0, 1, 2, 3, 4, 5, 6]) {
       it(`Today is ${DAYS_OF_WEEK[dayId]}`, () => {
-        expect(transformOpeningHours(emptyBase, { dayIndex: dayId })).toEqual([
+        const dayName = DAYS_OF_WEEK[dayId];
+        if (!dayName) {
+          throw new Error("Unexpected error");
+        }
+
+        expect(transformOpeningHours(emptyBase, { dayName })).toEqual([
           {
             dayName: "monday",
             isToday: dayId === 1,
@@ -243,7 +248,11 @@ describe("Opening hours transformer", () => {
   describe("Closed all days, no days are present", () => {
     for (const dayId of [0, 1, 2, 3, 4, 5, 6]) {
       it(`Today is ${DAYS_OF_WEEK[dayId]}`, () => {
-        expect(transformOpeningHours({}, { dayIndex: dayId })).toEqual([
+        const dayName = DAYS_OF_WEEK[dayId];
+        if (!dayName) {
+          throw new Error("Unexpected error");
+        }
+        expect(transformOpeningHours({}, { dayName })).toEqual([
           {
             dayName: "monday",
             isToday: dayId === 1,
@@ -349,7 +358,7 @@ describe("Opening hours transformer", () => {
               },
             ],
           },
-          { dayIndex: 1 }
+          { dayName: "monday" }
         )
       ).toEqual([
         { dayName: "monday", isToday: true, openHours: [] },
@@ -412,7 +421,7 @@ describe("Opening hours transformer", () => {
             { type: "close", value: 75600 },
           ],
         },
-        { dayIndex: 5 }
+        { dayName: "friday" }
       );
 
       const expected = [

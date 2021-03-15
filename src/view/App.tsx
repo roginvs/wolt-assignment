@@ -57,7 +57,7 @@ export function App() {
       <GlobalStyle />
       <AddGoogleFont />
       <Container>
-        <OpeningHoursUi openingHours={SAMPLE_OPENING_HOURS} nowDayIndex={4} />
+        <OpeningHoursUi openingHours={SAMPLE_OPENING_HOURS} nowDay="thursday" />
       </Container>
     </>
   );

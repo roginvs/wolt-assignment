@@ -65,10 +65,10 @@ const DAY_LABELS: Record<DayOfWeek, string> = {
 
 export function OpeningHoursUi(props: {
   openingHours: OpeningHours;
-  nowDayIndex: number;
+  nowDay: DayOfWeek;
 }) {
   const data = transformOpeningHours(props.openingHours, {
-    dayIndex: props.nowDayIndex,
+    dayName: props.nowDay,
   });
 
   return (
